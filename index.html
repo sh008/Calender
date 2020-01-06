@@ -21,6 +21,9 @@
 
     <script>
         Calender.create("place");
+        $("#place").on('boxClick', (e,date) => {
+            console.log(date);
+        })
     </script>
 </body>
 
