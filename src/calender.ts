@@ -1,5 +1,6 @@
 import * as moment from 'moment-jalaali';
 import { Box } from './box';
+import { holidayBox } from './box';
 class Calender {
     constructor() {
         this.style();
@@ -23,7 +24,7 @@ class Calender {
             date.locale('fa');
             let day = date.day() === 6 ? 0 : date.day() + 1;
             if(day === 6){
-                tr += `<td>${(new Box(i)).create('bg-danger')}</td>`
+                tr += `<td>${(new holidayBox(i)).create('bg-danger')}</td>`
             }
             else if (day === 0) {
                 res += `<tr>${tr}</tr>`;
@@ -35,17 +36,23 @@ class Calender {
         res += `<tr>${tr}</tr>`;
 
         return `
-        <table>
-            <thead>
-            <tr class='text-center'>
-            <th>شنبه</th><th>یکشنبه</th><th>دوشنبه</th><th>سه شنبه</th><th>چهارشنبه</th><th>پنجشنبه</th><th>جمعه</th>
-            </tr>
-            </thead>
-            <tbody>
-                ${res}
-            </tbody>
-        </table>
-        `;
+            <table class="container fluid">
+                <thead class="__table-style">
+                <tr class='text-center'>
+                <th>شنبه</th>
+                <th>یکشنبه</th>
+                <th>دوشنبه</th>
+                <th>سه شنبه</th>
+                <th>چهارشنبه</th>
+                <th>پنجشنبه</th>
+                <th>جمعه</th>
+                </tr>
+                </thead>
+                <tbody>
+                    ${res}
+                </tbody>
+            </table>
+            `;
     }
 
 

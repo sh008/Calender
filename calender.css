@@ -1,3 +1,52 @@
+@import url('./persianfont.css');
+
+body {
+    direction: rtl;
+    font-family: "IRANSans";
+    background-color: darkslategray;
+    color: floralwhite;
+}
+.__header-style {
+    text-align: right;
+    padding: 25px 0;
+    border-bottom: gray 2px solid;
+}
+.card-body {
+    text-align: center;
+    padding: 0.5rem;
+}
+.card-title {
+    color: yellowgreen;
+}
+.__holiday-style {
+    color: whitesmoke;
+    text-align: center;
+}
+.__table-style {
+    height: 50px;
+}
+.__click-event {
+    font-size: 25px;
+    width: 100%;
+    padding-top: 10px;
+    color: white;
+    border: none;
+    background-color: transparent;
+}
+.__click-event-holiday {
+    font-size: 25px;
+    width: 100%;
+    padding-top: 10px;
+    color: #dc3545;
+    border: none;
+    background-color: transparent;
+}
+.__click-event:hover {
+    color: black;
+}
+.__click-event-holiday:hover {
+    color: black;
+}
 .col-1-7{
     width:14.2857%;
 }
