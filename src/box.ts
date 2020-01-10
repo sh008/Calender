@@ -1,25 +1,47 @@
 import * as moment from 'moment-jalaali';
 export class Box {
-  _boxDate;
-  _fullDate;
-  constructor(offset: number) {
-    let date = moment().add(offset, 'days');
-    this._fullDate= date.format('jYYYY/jM/jD')
-    this._boxDate = date.format('jD');
-  }
-  create(color = '') {
-    let text = '';
-    if (color) {
-      text = 'text-white';
-    }
-    return `
-        <div class="calender-card card ${color} ${text}" date='${this._fullDate}'>
-        <div class="card-body custom-card">
-          <h5 class="card-title" style='text-align:right'>${this._boxDate}</h5>
-          <h6 class="card-subtitle mb-2"></h6>
-        </div>
-      </div>
-        `
-  }
-
+	_boxDate;
+	_border;
+	constructor(offset: number) {
+			let date = moment().add(offset, 'days');
+			this._boxDate = date.format('jD');
+			this._border = offset === 0 ? 'today-border':'';
+	}
+	create() {
+			return`
+			<div class="card ${this._border}">
+				<div class="card-body col-md-12">
+					<div>
+						<h5 class="card-title float-right">${this._boxDate}</h5>
+						<button class="card-subtitle mb-2 __holiday-style __click-event float-left">
+							<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			`
+	}
+}
+export class holidayBox {
+	_boxDate;
+	_border;
+	constructor(offset: number) {
+			let date = moment().add(offset, 'days');
+			this._boxDate = date.format('jD');
+			this._border = offset === 0 ? 'today-border':'';
+	}
+	create() {
+			return`
+			<div class="card ${this._border} bg-holiday">
+				<div class="card-body col-md-12">
+				<div>
+				<h5 class="card-title float-right">${this._boxDate}</h5>
+				<button class="card-subtitle mb-2 __holiday-style __click-event float-left">
+					<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+				</button>
+			</div>
+				</div>
+			</div>
+			`
+	}
 }
