@@ -2,38 +2,50 @@ import * as moment from 'moment-jalaali';
 import { Box } from './box';
 import { holidayBox } from './box';
 class Calender {
+    _today;
+    _year;
+    _month;
     constructor() {
     }
-    style(month) {
-        const today = moment();
-        let day = today.jDate();
-        let start = 1 - day;
-        let startdate = moment().add(start, 'days');
-        let startdaten = startdate.day() === 6 ? 0 : startdate.day() + 1;
-        let end = moment.jDaysInMonth(today.jYear(), today.jMonth()) - day;
-        // const headTitle =  `امروز ${today.jDate()} ${this.months[today.jMonth()-1]} ${today.jYear()}`;
+    style(year = 0, month = 0) {
+        this._month = month;
+        this._year = year;
+        moment.loadPersian();
+        this._today = this.firstDateMoment().format("jMMM jYYYY");
+        //اولین روز سال چند شنبه است
+        let start = this.findFirstDay();
+        //ماه چند روز دارد
+        let end = this.monthLength();
+
         let res = "";
         let tr = "";
-        for (let i = 0; i < startdaten; i++) {
+        for (let i = 0; i < start; i++) {
             tr += '<td></td>';
         }
-        for (let i = start; i <= end; i++) {
-            let date = moment().add(i, 'days');
-            date.locale('fa');
+        for (let i = 0; i < end; i++) {
+            let date = this.firstDateMoment().add(i, 'day');
             let day = date.day() === 6 ? 0 : date.day() + 1;
-            if(day === 6){
-                tr += `<td>${(new holidayBox(i)).create()}</td>`
+            if (day === 6) {
+                tr += `<td>${(new holidayBox(date)).create()}</td>`
             }
             else if (day === 0) {
                 res += `<tr>${tr}</tr>`;
-                tr = `<td>${(new Box(i)).create()}</td>`
+                tr = `<td>${(new Box(date)).create()}</td>`
             } else {
-                tr += `<td>${(new Box(i)).create()}</td>`
+                tr += `<td>${(new Box(date)).create()}</td>`
             }
         }
         res += `<tr>${tr}</tr>`;
 
         return `
+            <div> 
+            <div class='row'>
+            <div class='col-4'><a id='next-month' class='float-right pointer'>ماه بعد</a></div>
+            <div class='col-4 text-center'>${this._today}</div>
+            <div class='col-4'><a id='pre-month' class='float-left pointer'>ماه قبل</a></div>
+                
+            </div>
+            <hr>
             <table class="container fluid">
                 <thead class="__table-style">
                 <tr class='text-center'>
@@ -50,7 +62,20 @@ class Calender {
                     ${res}
                 </tbody>
             </table>
+            </div>
             `;
+    }
+    findFirstDay() {
+        let firstDay = 0;
+        let date = moment(`${this._year}/${this._month + 1}/1`, 'jYYYY/jM/jD');
+        firstDay = date.day() === 6 ? 0 : date.day() + 1;
+        return firstDay;
+    }
+    monthLength() {
+        return moment.jDaysInMonth(this._year, this._month)
+    }
+    firstDateMoment() {
+        return moment(`${this._year}/${this._month + 1}/1`, 'jYYYY/jM/jD');
     }
 
 
