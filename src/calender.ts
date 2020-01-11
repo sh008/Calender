@@ -12,6 +12,7 @@ class Calender {
         this._year = year;
         moment.loadPersian();
         this._today = this.firstDateMoment().format("jMMM jYYYY");
+        console.log(this._today);
         //اولین روز سال چند شنبه است
         let start = this.findFirstDay();
         //ماه چند روز دارد
@@ -41,7 +42,7 @@ class Calender {
             <div> 
             <div class='row'>
             <div class='col-4'><a id='next-month' class='float-right pointer'>ماه بعد</a></div>
-            <div class='col-4 text-center'>${this._today}</div>
+            <div class='col-4 text-center' id='date-text'>${this._today}</div>
             <div class='col-4'><a id='pre-month' class='float-left pointer'>ماه قبل</a></div>
                 
             </div>
