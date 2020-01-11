@@ -1,6 +1,6 @@
-class Modal{
-    selectDate(){
-        return `
+class Modal {
+  selectDate() {
+    return `
         <div class='row'>
             <div class='form-group col-12'>
             <label class='float-right'>سال</label>
@@ -25,9 +25,9 @@ class Modal{
             </div>
         </div>
         `
-    }
-    modalSelectDate(){
-        return`
+  }
+  modalSelectDate() {
+    return `
         <div id='SelctDateModal' class="modal" tabindex="-1" role="dialog" style='color:black;diraction:rtl'>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -46,6 +46,41 @@ class Modal{
 </div>
         
         `
-    }
+  }
+  addTask() {
+    return `
+      <div class='row'>
+          <div class='form-group col-12'>
+          <label class='float-right'>ساعت</label>
+          <input type='time' class='form-control' id='task-time'/>
+          </div>
+          <div class='form-group col-12'>
+          <label class='float-right'>توضیح</label>
+              <input class='form-control' type='text' id='task-disc'/>
+          </div>
+      </div>
+      `
+  }
+  modalTask() {
+    return `
+      <div id='taskModal' class="modal" tabindex="-1" role="dialog" style='color:black;diraction:rtl'>
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title"><span id='headDate'></span> افزودن رویداد</h5>
+    </div>
+    <div class="modal-body">
+      ${this.addTask()}
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" onclick='Calender.addTask()'>ذخیره</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+    </div>
+  </div>
+</div>
+</div>
+      
+      `
+  }
 }
 export default new Modal();

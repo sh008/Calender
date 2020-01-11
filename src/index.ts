@@ -5,12 +5,12 @@ declare const $: any;
 let year = 0;
 let month = 0;
 let events = [];
+let selectedDate;
 let Id;
-var build = function(){
+var build = function () {
   $("#" + Id).empty();
-  console.log(year,month);
   $("#" + Id).append(calender.style(year, month));
-  $("#" + Id).append(Modal.modalSelectDate());
+  $("#" + Id).append(Modal.modalSelectDate()).append(Modal.modalTask());
   creat(Id);
 }
 var creat = function (id) {
@@ -20,11 +20,14 @@ var creat = function (id) {
   }
   setTimeout(() => {
     $(".calender-card").on('click', (e) => {
-      // console.log(e.target);
+      console.log(e.target);
       let elem = $(e.target).closest('.calender-card');
       let date = $(elem).attr('date');
       $(".custom-menu").finish().toggle(100);
       $(elem).trigger('boxClick', [date]);
+      $("#taskModal").modal('show');
+      selectedDate = date;
+      $("#headDate").html(date);
     })
     $("#next-month").on('click', (e) => {
       if (month == 11) {
@@ -33,7 +36,6 @@ var creat = function (id) {
       } else {
         month++;
       }
-      console.log(year, month);
       build();
     })
     $("#pre-month").on('click', (e) => {
@@ -43,21 +45,20 @@ var creat = function (id) {
       } else {
         month--;
       }
-      console.log(year, month);
       build();
     })
     $("#date-text").on('click', (e) => {
       $("#SelctDateModal").modal('show');
     })
+    chekTask();
   }, 0);
 };
 var init = function (id) {
   const today = moment();
   year = today.jYear();
   month = today.jMonth();
-  console.log(year,month);
   $("#" + id).append(calender.style(year, month));
-  $("#" + id).append(Modal.modalSelectDate());
+  $("#" + id).append(Modal.modalSelectDate()).append(Modal.modalTask());
 }
 var goDate = function () {
   $("#SelctDateModal").modal('hide');
@@ -66,14 +67,35 @@ var goDate = function () {
   if (textYear && textMonth) {
     year = +textYear;
     month = +textMonth;
-    console.log(year,month);
     build();
   }
 }
-
+var chekTask = function () {
+  let tasks = $(".task");
+  for (let task of tasks) {
+    let taskDate = $(task).closest('.calender-card').attr('date');
+    let taskCount = events.filter(x => x['date'] === taskDate).length;
+    $(task).html(taskCount);
+    if ($(task).html() === "0") {
+      $(task).css({
+        'display': 'none'
+      })
+    }
+  }
+}
+var addTask = function () {
+  events.push({
+    date: selectedDate,
+    time: $("#task-time").val(),
+    disc: $("#task-disc").val()
+  })
+  let taskText = $(`div[date='${selectedDate}']`).find('.task');
+  taskText.html(+taskText.html() + 1).css({ 'display': 'block' })
+  $("#taskModal").modal('hide');
+}
 module.exports = {
-
   create: creat,
   init: init,
-  goDate:goDate
+  goDate: goDate,
+  addTask: addTask
 };

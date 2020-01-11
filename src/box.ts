@@ -4,18 +4,18 @@ export class Box {
 	_border;
 	_day;
 	constructor(date) {
-			this._boxDate = date.format('jYYYY/jM/jD');
-			this._day = date.format('jD');
+		this._boxDate = date.format('jYYYY/jM/jD');
+		this._day = date.format('jD');
 	}
 	create() {
-			return`
-			<div class="card ${this._border}" date=${this._boxDate}>
+		return `
+			<div class="calender-card card" date=${this._boxDate}>
 				<div class="card-body col-md-12">
+				<div class="flags">
+                                <a class="task">0</a>
+                            </div>
 					<div>
 						<h5 class="card-title float-right">${this._day}</h5>
-						<button class="card-subtitle mb-2 __holiday-style __click-event float-left">
-							<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-						</button>
 					</div>
 				</div>
 			</div>
@@ -31,17 +31,21 @@ export class holidayBox {
 		this._day = date.format('jD');
 	}
 	create() {
-			return`
-			<div class="card ${this._border} bg-holiday" date=${this._boxDate}>
+		return `
+			<div class="calender-card card bg-holiday" date=${this._boxDate}>
 				<div class="card-body col-md-12">
+				<div class="flags">
+				<a class="task">0</a>
+			</div>
 				<div>
 				<h5 class="card-title float-right">${this._day}</h5>
-				<button class="card-subtitle mb-2 __holiday-style __click-event float-left">
-					<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-				</button>
+
 			</div>
 				</div>
 			</div>
 			`
 	}
 }
+// <button class="card-subtitle mb-2 __holiday-style __click-event float-left">
+// <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+// </button>
