@@ -47,8 +47,8 @@ class Calender {
                 
             </div>
             <hr>
-            <table class="container fluid">
-                <thead class="__table-style">
+            <table class="container fluid __table-style">
+                <thead>
                 <tr class='text-center'>
                 <th>شنبه</th>
                 <th>یکشنبه</th>

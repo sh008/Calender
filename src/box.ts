@@ -11,12 +11,13 @@ export class Box {
 		return `
 			<div class="calender-card card" date=${this._boxDate}>
 				<div class="card-body col-md-12">
+				<div>
+				<h5 class="card-title float-right">${this._day}</h5>
+			</div>
 				<div class="flags">
-                                <a class="task">0</a>
+                                
                             </div>
-					<div>
-						<h5 class="card-title float-right">${this._day}</h5>
-					</div>
+
 				</div>
 			</div>
 			`
@@ -34,12 +35,8 @@ export class holidayBox {
 		return `
 			<div class="calender-card card bg-holiday" date=${this._boxDate}>
 				<div class="card-body col-md-12">
-				<div class="flags">
-				<a class="task">0</a>
-			</div>
-				<div>
 				<h5 class="card-title float-right">${this._day}</h5>
-
+				<div class="flags">
 			</div>
 				</div>
 			</div>

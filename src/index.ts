@@ -6,21 +6,36 @@ let year = 0;
 let month = 0;
 let events = [];
 let selectedDate;
+let Counter = 0;
 let Id;
 var build = function () {
   $("#" + Id).empty();
   $("#" + Id).append(calender.style(year, month));
   $("#" + Id).append(Modal.modalSelectDate()).append(Modal.modalTask());
-  creat(Id);
+  init(Id);
 }
-var creat = function (id) {
+var creat = function (id, evs = []) {
   Id = id;
+  events = [...evs];
+  Counter = evs.length;
   if (year == 0) {
     init(id);
   }
+};
+var init = function (id) {
+  if (year == 0) {
+    const today = moment();
+    year = today.jYear();
+    month = today.jMonth();
+    $("#" + id).append(calender.style(year, month));
+    $("#" + id).append(Modal.modalSelectDate()).append(Modal.modalTask());
+  }
   setTimeout(() => {
     $(".calender-card").on('click', (e) => {
-      console.log(e.target);
+      if ($(e.target).hasClass('task')) {
+        removeTask(e.target.id);
+        return;
+      }
       let elem = $(e.target).closest('.calender-card');
       let date = $(elem).attr('date');
       $(".custom-menu").finish().toggle(100);
@@ -52,13 +67,6 @@ var creat = function (id) {
     })
     chekTask();
   }, 0);
-};
-var init = function (id) {
-  const today = moment();
-  year = today.jYear();
-  month = today.jMonth();
-  $("#" + id).append(calender.style(year, month));
-  $("#" + id).append(Modal.modalSelectDate()).append(Modal.modalTask());
 }
 var goDate = function () {
   $("#SelctDateModal").modal('hide');
@@ -71,31 +79,54 @@ var goDate = function () {
   }
 }
 var chekTask = function () {
-  let tasks = $(".task");
-  for (let task of tasks) {
-    let taskDate = $(task).closest('.calender-card').attr('date');
-    let taskCount = events.filter(x => x['date'] === taskDate).length;
-    $(task).html(taskCount);
-    if ($(task).html() === "0") {
-      $(task).css({
-        'display': 'none'
-      })
+  let cards = $(".calender-card");
+  for (let card of cards) {
+    let taskDate = $(card).attr('date');
+    let allTasksForDate = events.filter(x => x['date'] === taskDate);
+    for (let dateTask of allTasksForDate) {
+      let text = dateTask['disc'].length > 20 ? dateTask['disc'].substring(0, 20) + '...' : dateTask['disc'];
+      let taskTemplate = $(`<a class='task pointer' id='${dateTask['id']}' data-hover="حذف"><span>${text}</span></a>`);
+      $(`div[date='${taskDate}']`).find('.flags').append(taskTemplate);
+      taskTemplate.css({ 'display': 'block' })
     }
+
   }
 }
+var clear = function () {
+  $("#task-time").val(''),
+    $("#task-disc").val('')
+}
 var addTask = function () {
+  if (!$("#task-disc").val()) {
+    return;
+  }
   events.push({
     date: selectedDate,
     time: $("#task-time").val(),
-    disc: $("#task-disc").val()
+    disc: $("#task-disc").val(),
+    id: 'task' + ++Counter
   })
-  let taskText = $(`div[date='${selectedDate}']`).find('.task');
-  taskText.html(+taskText.html() + 1).css({ 'display': 'block' })
+  //create task tag
+  let text = $("#task-disc").val().length > 20 ? $("#task-disc").val().substring(0, 20) + '...' : $("#task-disc").val();
+  let task = $(`<a class='task pointer' id='task${Counter}' data-hover="حذف"><span>${text}</span></a>`);
+  $(`div[date='${selectedDate}']`).find('.flags').append(task);
+  // taskText.html(+taskText.html() + 1).css({ 'display': 'block' })
+  task.css({ 'display': 'block' })
   $("#taskModal").modal('hide');
+  clear();
+}
+var removeTask = function (id) {
+  let taskIndex = events.findIndex(x => x.id == id);
+  events.splice(taskIndex, 1);
+  $("#" + id).remove();
+}
+var exportTasks = function () {
+  return events;
 }
 module.exports = {
   create: creat,
   init: init,
   goDate: goDate,
-  addTask: addTask
+  addTask: addTask,
+  exportTasks: exportTasks
 };

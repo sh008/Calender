@@ -26,6 +26,9 @@ body {
 .__table-style {
     height: 50px;
 }
+.__table-style td{
+    width: 14.2857142857%;
+}
 .__click-event {
     font-size: 14px;
     padding-top: 10px;
@@ -55,16 +58,17 @@ body {
     cursor: pointer;
 }
 .flags{
-    position: absolute;
+    position: content;
     top: 0;
     z-index: 10;
     transition: all .3s ease;
     opacity: 1;
     left: 0;
+    width: 100%;
 }
 .flags a{
     margin-bottom: 5px;
-    background: #d84759;
+    background: #3788d8;
     display: block;
     float: left;
     clear: both;
@@ -78,4 +82,50 @@ body {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-top-left-radius: 5px;
+    width: 100%;
+    transition: 1s;
+}
+.flags a:before{
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    font-size: medium;
+    -webkit-transition: .4s,opacity .3s;
+    -moz-transition: .4s,opacity .3s;
+    -o-transition: .4s,opacity .3s;
+    transition: .4s,opacity .3s;
+}
+.flags a:before {
+    content: attr(data-hover);
+    -webkit-transform: translate(-110%,0);
+    -moz-transform: translate(-110%,0);
+    -ms-transform: translate(-110%,0);
+    -o-transform: translate(-110%,0);
+    transform: translate(-110%,0);
+}
+
+.flags a:hover span{
+    opacity: 0;
+}
+.flags a:hover:before{
+    opacity: 1;
+    -webkit-transform: translate(0,0);
+    -moz-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -o-transform: translate(0,0);
+    transform: translate(0,0);
+    -webkit-transition-delay: .1s;
+    -moz-transition-delay: .1s;
+    -o-transition-delay: .1s;
+    transition-delay: .1s;
+}
+
+.hidden{
+    display: none;
+}
+.pointer{
+    cursor: pointer;
 }

@@ -50,7 +50,7 @@ class Modal {
   addTask() {
     return `
       <div class='row'>
-          <div class='form-group col-12'>
+          <div class='form-group col-12 hidden'>
           <label class='float-right'>ساعت</label>
           <input type='time' class='form-control' id='task-time'/>
           </div>
